@@ -54,7 +54,7 @@ class TasksLocalDataSource internal constructor(
         //NO-OP
     }
 
-    override suspend fun getTasks(): Result<List<Task>> = withContext(ioDispatcher) {
+    override suspend fun getTasks(forceUpdate: Boolean): Result<List<Task>> = withContext(ioDispatcher) {
         return@withContext try {
             Success(tasksDao.getTasks())
         } catch (e: Exception) {
@@ -62,7 +62,7 @@ class TasksLocalDataSource internal constructor(
         }
     }
 
-    override suspend fun getTask(taskId: String): Result<Task> = withContext(ioDispatcher) {
+    override suspend fun getTask(taskId: String, forceUpdate: Boolean): Result<Task> = withContext(ioDispatcher) {
         try {
             val task = tasksDao.getTaskById(taskId)
             if (task != null) {

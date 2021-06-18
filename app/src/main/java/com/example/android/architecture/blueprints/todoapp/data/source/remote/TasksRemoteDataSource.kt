@@ -67,14 +67,15 @@ object TasksRemoteDataSource : TasksDataSource {
         }
     }
 
-    override suspend fun getTasks(): Result<List<Task>> {
+
+    override suspend fun getTasks(forceUpdate: Boolean): Result<List<Task>> {
         // Simulate network by delaying the execution.
         val tasks = TASKS_SERVICE_DATA.values.toList()
         delay(SERVICE_LATENCY_IN_MILLIS)
         return Success(tasks)
     }
 
-    override suspend fun getTask(taskId: String): Result<Task> {
+    override suspend fun getTask(taskId: String, forceUpdate: Boolean): Result<Task> {
         // Simulate network by delaying the execution.
         delay(SERVICE_LATENCY_IN_MILLIS)
         TASKS_SERVICE_DATA[taskId]?.let {
